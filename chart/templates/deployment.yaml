@@ -3,17 +3,17 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
 spec:
-  replicas: 1
+  replicas: 1 # это нужно выносить в values и увеличить до 2-х реплик минимум, если логика приложения такое позволяет
   selector:
     matchLabels:
-      app: my-app
+      app: my-app # название приложения так же следует выносить в values, и вставлять сюда Chart name
   template:
     metadata:
       labels:
-        app: my-app
+        app: my-app # тут должен быть chart name
     spec:
       containers:
-        - name: my-app
+        - name: my-app # тут должен быть chart name
           image: ghcr.io/ipakyulibank/devops-test-task1/test-app:{{ .Values.image.tag }}
           imagePullPolicy: Always
           env:
@@ -26,7 +26,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
+### весь блок с containers я бы вынес в values, т.к. тут все ситуативно
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}
+### блок c pvc я бы так же вынес в values, т.к. могут быть как минимум разные политики
