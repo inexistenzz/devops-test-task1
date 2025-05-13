@@ -1,5 +1,24 @@
+replicaCount: 2
 image:
+  repository: ghcr.io/ipakyulibank/devops-test-task1/test-app
   tag: master
+  pullPolicy: IfNotPresent
+
+env: {}
 
 ingress:
-  host: my-app.com
+  enabled: true
+  className: {}
+  host: {}
+  path: {}
+  pathType: Prefix
+  annotations: {}
+
+service:
+  port: {}
+
+persistence:
+  enabled: true
+  accessMode: {}
+  size: {}
+  storageClass: {}
